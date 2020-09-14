@@ -39,15 +39,15 @@ namespace SomethingTests
             Assert.Equal(expected, actual.Name);
         }
         [Fact]
-        public void SomethingPersistence_SavesSomethingToDatabase()
+        public void DbContextFactory_CreateAppDbContext_SavesSomethingToDatabaseAndRetrievesIt()
         {
             var something = new Domain.Something() { Name = "Fred Bloggs" };
-            using (var ctx = new DbContextFactory().CreateAppDbContext(nameof(SomethingPersistence_SavesSomethingToDatabase)))
+            using (var ctx = new DbContextFactory().CreateAppDbContext(nameof(DbContextFactory_CreateAppDbContext_SavesSomethingToDatabaseAndRetrievesIt)))
             {
                 ctx.Somethings.Add(something);
                 ctx.SaveChanges();
             };
-            using (var ctx = new DbContextFactory().CreateAppDbContext(nameof(SomethingPersistence_SavesSomethingToDatabase)))
+            using (var ctx = new DbContextFactory().CreateAppDbContext(nameof(DbContextFactory_CreateAppDbContext_SavesSomethingToDatabaseAndRetrievesIt)))
             {
                 var savedSomething = ctx.Somethings.Single();
                 Assert.Equal(something.Name, savedSomething.Name);
